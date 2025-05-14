@@ -1,0 +1,21 @@
+@isTest
+private class TestRestrictContactByName {
+	@isTest
+    static void TestDeleteContact() {
+        Test.startTest();
+        Contact invalidContact = new Contact(FirstName = 'John', LastName = 'INVALIDNAME');
+        try {
+            insert invalidContact;
+            System.assert(false, 'Expected an exception for invalid contact insert.');
+        } catch (DmlException e) {
+            System.assert(e.getMessage().contains('Contacts with the last name "INVALIDNAME" are not allowed.'));
+        }
+
+        Contact validContact = new Contact(FirstName = 'John', LastName = 'Smith');
+        insert validContact;
+        Contact con = [SELECT Id, FirstName FROM Contact WHERE Id = :invalidContact.Id];
+        System.assertEquals('Doe', con.LastName);
+        System.assertEquals('John', con.FirstName);
+        Test.stopTest();
+    }
+}

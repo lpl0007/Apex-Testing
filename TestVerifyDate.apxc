@@ -1,0 +1,51 @@
+@isTest
+private class TestVerifyDate {
+    @isTest
+    static void testValidCheckDates() {
+        Date testDate1 = Date.newInstance(2023, 10, 1);
+        Date testDate2 = Date.newInstance(2023, 10, 8);
+        Date isValid = VerifyDate.CheckDates(testDate1, testDate2);
+        System.assertEquals(testDate2, isValid);
+    }
+
+    @isTest
+    static void testInvalidCheckDates() {
+        Date testDate1 = Date.newInstance(2023, 10, 1);
+        Date testDate2 = Date.newInstance(2024, 10, 8);
+        Date result = Date.newInstance(2023, 10, 31);
+        Date isValid = VerifyDate.CheckDates(testDate1, testDate2);
+        System.assertEquals(result, isValid);
+    }
+    
+    @isTest
+    static void testReverseDateWithin30Days() {
+        Date testDate1 = Date.newInstance(2023, 10, 8);
+        Date testDate2 = Date.newInstance(2023, 10, 1);
+        Boolean isValid = VerifyDate.DateWithin30Days(testDate1, testDate2);
+        System.assertEquals(false, isValid);
+    }
+    
+    @isTest
+    static void testInvalidDateWithin30Days() {
+        Date testDate1 = Date.newInstance(2023, 10, 1);
+        Date testDate2 = Date.newInstance(2024, 10, 8);
+        Boolean isValid = VerifyDate.DateWithin30Days(testDate1, testDate2);
+        System.assertEquals(false, isValid);
+    }
+    
+    @isTest
+    static void testValidDateWithin30Days() {
+        Date testDate1 = Date.newInstance(2023, 10, 1);
+        Date testDate2 = Date.newInstance(2023, 10, 8);
+        Boolean isValid = VerifyDate.DateWithin30Days(testDate1, testDate2);
+        System.assertEquals(true, isValid);
+    }
+    
+    @isTest
+    static void testSetEndOfMonthDate() {
+        Date testDate = Date.newInstance(2023, 10, 1);
+        Date result = Date.newInstance(2023, 10, 31);
+        Date isValid = VerifyDate.SetEndOfMonthDate(testDate);
+        System.assertEquals(result, isValid);
+    }
+}
